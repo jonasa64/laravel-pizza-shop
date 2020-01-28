@@ -17,6 +17,7 @@ class CreateOrderPizzaTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('pizza_id');
+            $table->unsignedInteger('quantity');
             $table->foreign('order_id')->references('users')->on('id');
             $table->foreign('pizza_id')->references('pizza')->on('id');
             $table->timestamps();
