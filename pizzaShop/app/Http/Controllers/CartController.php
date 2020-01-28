@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
-
+use App\Pizza;
 class CartController extends Controller
 {
     /**
@@ -13,7 +13,11 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+       cart::destroy();
+        $price = Cart::total(0);
+
+        return view('cart.index', ['price' => $price]);
+    
     }
 
     /**
@@ -34,7 +38,25 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       /* 
+        $duplicates = Cart::search(function ($cartItem, $rowId) use ($pizza){
+            return $cartItem->id === $pizza->id;
+        } );
+
+        if($duplicates->isNotEmpty()){
+            return redirect()->route('cart.index')->with('success_message', 'Item is already in your cart!');
+        }*/
+
+        
+    
+        Cart::add($request->id, $request->name, 1,$request->price )
+        ->associate('App\Pizza');
+
+        $price = Cart::total(0);
+
+        return view('cart.index', ['price' => $price]);
+
+
     }
 
     /**
@@ -79,6 +101,9 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cart::remove($id);
+        $price = Cart::total(0);
+
+        return view('cart.index', ['price' => $price]);
     }
 }

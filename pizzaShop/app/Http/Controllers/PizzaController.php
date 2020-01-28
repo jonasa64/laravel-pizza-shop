@@ -15,11 +15,10 @@ class PizzaController extends Controller
     public function index()
     {
         //
-        $pizzas = Pizza::all();
+        $pizzas = Pizza::with('ingredients')->get();
         
-        return View('pizza.index')->with([
-            'pizzas'=> $pizzas
-        ]);
+
+        return View('pizza.index', compact('pizzas'));
     }
 
     /**
@@ -49,10 +48,11 @@ class PizzaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Pizza $pizza)
+    public function show($id)
     {
-        //
-        $pizza = Pizza::where('id', $pizza);
+       
+        $pizza = Pizza::find($id);
+
         return View('pizza.show')->with([
             'pizza' => $pizza
         ]);
