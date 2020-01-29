@@ -23,8 +23,10 @@ Route::post('pizza/','PizzaContoller@store')->name('pizza.store');
 Route::put('pizza/{pizza}/edit','PizzaContoller@edit')->name('pizza.edit');
 
 Route::get('cart/', 'CartController@index')->name('cart.index');
+Route::put('cart/{id}', 'CartController@update')->name('cart.update');
 Route::post('cart/{id}', 'CartController@store');
 Route::delete('cart/{id}', 'CartController@destroy')->name('cart.destroy');
+
 
 Route::get('checkout/', 'CheckoutController@index')->name('checkout.index');
 Route::post('checkout/', 'CheckoutController@store')->name('checkout.store');
